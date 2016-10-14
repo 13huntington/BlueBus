@@ -35,8 +35,7 @@ public class AdministracionDeBLE {
 
     public AdministracionDeBLE() {
         mHandler = new Handler();
-
-         mBluetoothAdapter =  BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter =  BluetoothAdapter.getDefaultAdapter();
     }
 
 
@@ -50,11 +49,10 @@ public class AdministracionDeBLE {
 //Va capturando los dispositivos ble en rango y comprueba si es el deseado
     private void scanLeDevice(final boolean enable) {
         if (enable) {
-                        mBluetoothAdapter.startLeScan(mLeScanCallback);
+              mBluetoothAdapter.startLeScan(mLeScanCallback);
         } else {
-                      mBluetoothAdapter.stopLeScan(mLeScanCallback);
+              mBluetoothAdapter.stopLeScan(mLeScanCallback);
         }
-
     }
 
 
@@ -65,23 +63,15 @@ public class AdministracionDeBLE {
         public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
             mLeDeviceListAdapter.add(device);
             if (device.getName().equals("EST")) {
-
                 scanLeDevice(false);
                 Log.d("Hola", device.getName());
                 retorno.runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(retorno.getApplicationContext(), "Colectio acercandoce",
                                 Toast.LENGTH_SHORT).show();
-
                     }
                 });
-
-            }
-            ;
-        }
-
-        ;
-
-
+            };
+        };
     };
 }
