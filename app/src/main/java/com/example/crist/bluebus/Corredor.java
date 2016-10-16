@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Corredor {
     private final int numero;
-    private List<String> lineas;
+    private ArrayList<String> lineas;
 
     public Corredor(int numero, ArrayList<String> lineas){
         this.lineas = lineas;
@@ -23,11 +23,11 @@ public class Corredor {
         return numero;
     }
 
-    public List<String> getLineas() {
+    public  ArrayList<String> getLineas() {
         return lineas;
     }
 
-    public void setLineas(List<String> lineas) {
+    public void setLineas( ArrayList<String> lineas) {
         this.lineas = lineas;
     }
     
