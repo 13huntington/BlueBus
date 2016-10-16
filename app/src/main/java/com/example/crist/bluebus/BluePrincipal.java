@@ -16,10 +16,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BluePrincipal extends AppCompatActivity  {
+public class BluePrincipal extends AppCompatActivity {
     protected Spinner corredor, linea;
     Button buscar;
-    RadioButton ida , vuelta;
+    RadioButton ida, vuelta;
 
     BluetoothAdapter mBluetoothAdapter;
     int REQUEST_ENABLE_BT = 1;
@@ -32,9 +32,9 @@ public class BluePrincipal extends AppCompatActivity  {
         setContentView(R.layout.activity_blue_principal);
         linea = (Spinner) findViewById(R.id.spLinea);
         corredor = (Spinner) findViewById(R.id.spCorredor);
-         buscar = (Button) findViewById(R.id.btnBuscar);
-        ida= (RadioButton) findViewById(R.id.radioButtonIda);
-        vuelta= (RadioButton) findViewById(R.id.radioButtonVuelta);
+        buscar = (Button) findViewById(R.id.btnBuscar);
+        ida = (RadioButton) findViewById(R.id.radioButtonIda);
+        vuelta = (RadioButton) findViewById(R.id.radioButtonVuelta);
 
 
         addItemsOnSpinner();
@@ -48,26 +48,32 @@ public class BluePrincipal extends AppCompatActivity  {
 
     public void buscarA(View v) {
         AdministracionDeBLE dsa = new AdministracionDeBLE();
-        if (buscar.getText().equals("Buscar")){
+        if (buscar.getText().equals("Buscar")) {
             buscar.setText("Detener");
-            Toast mostrar = Toast.makeText(getApplication(),construirCadenaPatron(),Toast.LENGTH_LONG);
-            mostrar.show();
-            dsa.find(this,construirCadenaPatron());
-        }else{
+            dsa.find(this, construirCadenaPatron());
+        } else {
             dsa.stop();
             buscar.setText("Buscar");
         }
 
 
-
     }
 
-    private String construirCadenaPatron (){
-       if (ida.isChecked() && linea.getSelectedItem().equals("10")){
-           return "EST";
-       }
-        String cadena = "";
-      return  cadena;
+    private String construirCadenaPatron() {
+        String retornoCadena;
+        if (ida.isChecked() && linea.getSelectedItem().equals("10")) {
+            retornoCadena = "EST";
+            return retornoCadena;
+        } else {
+            if (ida.isChecked()) {
+                retornoCadena = linea.getSelectedItem() + "-i";
+                return retornoCadena;
+            } else {
+                retornoCadena = linea.getSelectedItem() + "-v";
+                return retornoCadena;
+            }
+        }
+
     }
 
     private void addItemsOnSpinner() {
@@ -77,8 +83,6 @@ public class BluePrincipal extends AppCompatActivity  {
         dataAdapterCorredor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         corredor.setAdapter(dataAdapterCorredor);
         linea.setAdapter(dataAdapterCorredor);
-
-
         corredor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -194,8 +198,6 @@ public class BluePrincipal extends AppCompatActivity  {
         auxCorredor.setLineas(lineas);
         listaCorredores.add(auxCorredor);
     }
-
-
 
 
 }
