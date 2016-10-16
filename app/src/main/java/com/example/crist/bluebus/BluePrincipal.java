@@ -7,16 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import android.widget.Toast;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class BluePrincipal extends AppCompatActivity  {
     protected Spinner corredor, linea;
     Button buscar;
+    RadioButton ida , vuelta;
 
     BluetoothAdapter mBluetoothAdapter;
     int REQUEST_ENABLE_BT = 1;
@@ -29,7 +32,11 @@ public class BluePrincipal extends AppCompatActivity  {
         setContentView(R.layout.activity_blue_principal);
         linea = (Spinner) findViewById(R.id.spLinea);
         corredor = (Spinner) findViewById(R.id.spCorredor);
-        buscar = (Button) findViewById(R.id.btnBuscar);
+         buscar = (Button) findViewById(R.id.btnBuscar);
+        ida= (RadioButton) findViewById(R.id.radioButtonIda);
+        vuelta= (RadioButton) findViewById(R.id.radioButtonVuelta);
+
+
         addItemsOnSpinner();
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (!mBluetoothAdapter.isEnabled()) {
@@ -41,7 +48,26 @@ public class BluePrincipal extends AppCompatActivity  {
 
     public void buscarA(View v) {
         AdministracionDeBLE dsa = new AdministracionDeBLE();
-        dsa.find(this);
+        if (buscar.getText().equals("Buscar")){
+            buscar.setText("Detener");
+            Toast mostrar = Toast.makeText(getApplication(),construirCadenaPatron(),Toast.LENGTH_LONG);
+            mostrar.show();
+            dsa.find(this,construirCadenaPatron());
+        }else{
+            dsa.stop();
+            buscar.setText("Buscar");
+        }
+
+
+
+    }
+
+    private String construirCadenaPatron (){
+       if (ida.isChecked() && linea.getSelectedItem().equals("10")){
+           return "EST";
+       }
+        String cadena = "";
+      return  cadena;
     }
 
     private void addItemsOnSpinner() {
@@ -74,6 +100,7 @@ public class BluePrincipal extends AppCompatActivity  {
 
 
     }
+
 
     private void cargarLista(List<Corredor> listaCorredores) {
         ArrayList<String> lineas;

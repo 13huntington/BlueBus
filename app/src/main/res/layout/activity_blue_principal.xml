@@ -25,17 +25,47 @@
         >
 
     </Spinner>
+  <RadioGroup
+      android:id="@+id/opcionesColectivo"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:layout_below="@+id/spLinea"
+      android:layout_alignStart="@+id/spLinea">
 
-    <Button
+
+    <RadioButton
+        android:text="Ida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Buscar"
-        android:id="@+id/btnBuscar"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/spLinea"
-        android:onClick="buscarA"
+        android:id="@+id/radioButtonIda"
+        android:checked="true"
+        android:shadowColor="@color/colorPrimary"
+        />
+
+    <RadioButton
+        android:text="Vuelta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioButtonVuelta"
+        android:layout_below="@+id/radioButtonIda"
+        android:checked="false"
+        android:layout_margin="@dimen/activity_horizontal_margin"
          />
+  </RadioGroup>
+
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Buscar"
+      android:id="@+id/btnBuscar"
+      android:onClick="buscarA"
+      android:layout_below="@+id/opcionesColectivo"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="46dp" />
+
+
 
 
 </RelativeLayout>

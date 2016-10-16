@@ -1,49 +1,29 @@
 package com.example.crist.bluebus;
-
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
-import android.view.View;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
-/**
- * Created by crist on 03/10/2016.
- */
 public class AdministracionDeBLE {
-    private ArrayList<BluetoothDevice> mLeDeviceListAdapter;
     private BluetoothAdapter mBluetoothAdapter;
-    private boolean mScanning;
-    private Handler mHandler;
-    Handler handler1 = new Handler();
-    BluePrincipal retorno;
-    // Stops scanning after 10 seconds.
-    private static final long SCAN_PERIOD = 1000000;
+    private BluePrincipal retorno;
+    private String patronABuscar;
+
 
 
     public AdministracionDeBLE() {
-        mHandler = new Handler();
-        mBluetoothAdapter =  BluetoothAdapter.getDefaultAdapter();
+      mBluetoothAdapter =  BluetoothAdapter.getDefaultAdapter();
     }
 
 
 //Inicializa la busqueda del colectivo
-   public void find(BluePrincipal atc){
-        mLeDeviceListAdapter  = new ArrayList<BluetoothDevice>();
+   public void find(BluePrincipal atc , String colectivo){
+        patronABuscar = colectivo;
         scanLeDevice(true);
         retorno =atc;
+    }
+    public void stop(){
+        scanLeDevice(false);
     }
 
 //Va capturando los dispositivos ble en rango y comprueba si es el deseado
@@ -58,11 +38,11 @@ public class AdministracionDeBLE {
 
 
     // Device scan callback.
-    public BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
+    private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
         @Override
         public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
-            mLeDeviceListAdapter.add(device);
-            if (device.getName().equals("EST")) {
+
+            if (device.getName().equals(patronABuscar)) {
                 scanLeDevice(false);
                 Log.d("Hola", device.getName());
                 retorno.runOnUiThread(new Runnable() {
@@ -71,7 +51,7 @@ public class AdministracionDeBLE {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
-            };
-        };
+            }
+        }
     };
 }
