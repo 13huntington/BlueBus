@@ -1,4 +1,4 @@
-package com.example.crist.bluebus;
+package com.BlueBlusPack.crist.bluebus;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 
 import java.util.ArrayList;

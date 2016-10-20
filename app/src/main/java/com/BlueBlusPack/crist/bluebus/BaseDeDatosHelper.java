@@ -1,9 +1,8 @@
-package com.example.crist.bluebus;
+package com.BlueBlusPack.crist.bluebus;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.Editable;
 
 /**
  * Created by Agu on 11/10/2016.

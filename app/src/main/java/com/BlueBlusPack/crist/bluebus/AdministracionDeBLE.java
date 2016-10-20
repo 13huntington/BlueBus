@@ -1,4 +1,4 @@
-package com.example.crist.bluebus;
+package com.BlueBlusPack.crist.bluebus;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.util.Log;

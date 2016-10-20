@@ -1,7 +1,6 @@
-package com.example.crist.bluebus;
+package com.BlueBlusPack.crist.bluebus;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by crist on 08/10/2016.
