@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.crist.bluebus">
+    package="com.BlueBlusPack.crist.bluebus">
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
     <application
         android:allowBackup="true"
@@ -11,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BluePrincipal">
+        <activity android:name="com.BlueBlusPack.crist.bluebus.BluePrincipal">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

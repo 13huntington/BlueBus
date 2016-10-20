@@ -1,7 +1,6 @@
 package com.BlueBlusPack.crist.bluebus;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.util.Log;
 import android.widget.Toast;
 
 public class AdministracionDeBLE {
@@ -44,10 +43,10 @@ public class AdministracionDeBLE {
 
             if (device.getName().equals(patronABuscar)) {
                 scanLeDevice(false);
-                Log.d("Hola", device.getName());
-                retorno.runOnUiThread(new Runnable() {
+                           retorno.runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(retorno.getApplicationContext(), "Colectio acercandoce",
+                        retorno.detener();
+                        Toast.makeText(retorno.getApplicationContext(), "Colectivo acercándose",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });

@@ -2,6 +2,7 @@ package com.BlueBlusPack.crist.bluebus;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,10 +20,11 @@ public class BluePrincipal extends AppCompatActivity {
     protected Spinner corredor, linea;
     Button buscar;
     RadioButton ida, vuelta;
-
+    AdministracionDeBLE dsa ;
     BluetoothAdapter mBluetoothAdapter;
     int REQUEST_ENABLE_BT = 1;
     Bundle savedInstanceState;
+    Vibrator vibrador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,9 @@ public class BluePrincipal extends AppCompatActivity {
         buscar = (Button) findViewById(R.id.btnBuscar);
         ida = (RadioButton) findViewById(R.id.radioButtonIda);
         vuelta = (RadioButton) findViewById(R.id.radioButtonVuelta);
-
-
+        dsa = new AdministracionDeBLE();
         addItemsOnSpinner();
+        vibrador = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -44,19 +46,42 @@ public class BluePrincipal extends AppCompatActivity {
         }
 
     }
+    public void detener(){
+        dsa.stop();
+        vibrador.vibrate(2500);
+        habilitarBotones();
+        buscar.setText("Buscar");
+    }
 
     public void buscarA(View v) {
-        AdministracionDeBLE dsa = new AdministracionDeBLE();
+
         if (buscar.getText().equals("Buscar")) {
+            desHabilitarBotones();
             buscar.setText("Detener");
             dsa.find(this, construirCadenaPatron());
         } else {
             dsa.stop();
+            habilitarBotones();
             buscar.setText("Buscar");
         }
 
 
     }
+
+    public void desHabilitarBotones(){
+        corredor.setEnabled(false);
+        linea.setEnabled(false);
+        ida.setEnabled(false);
+        vuelta.setEnabled(false);
+    }
+    public void habilitarBotones(){
+        corredor.setEnabled(true);
+        linea.setEnabled(true);
+        ida.setEnabled(true);
+        vuelta.setEnabled(true);
+    }
+
+
 
     private String construirCadenaPatron() {
         String retornoCadena;
