@@ -3,15 +3,11 @@ package com.BlueBlusPack.crist.bluebus.Datos;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 /**
@@ -20,8 +16,6 @@ import java.io.OutputStream;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-//    private static String DB_PATH1 = "/data/data/com.BlueBlusPack.crist.bluebus";
-//    private static String DB_PATH2 = "/databases/";
     private static String DB_PATH = "";
     private static String DB_NAME = "BlueBusBD.db";
     private static int DB_VERSION = 1;
@@ -72,27 +66,6 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
     }
-
- /*   private boolean checkDataBase() {
-
-        SQLiteDatabase checkDB = null;
-
-        try {
-            String myPath = DB_PATH + DB_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-
-        } catch (SQLiteException e) {
-            // Base de datos no creada todavia
-        }
-//capaz sea necesario un finally
-        if (checkDB != null) {
-
-            checkDB.close();
-        }
-
-        return checkDB != null ? true : false;
-
-    }*/
 
     //Check that the database exists here: /data/data/your package/databases/Da Name
     private boolean checkDataBase()

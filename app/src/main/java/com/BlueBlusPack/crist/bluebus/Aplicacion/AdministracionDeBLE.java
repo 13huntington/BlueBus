@@ -3,11 +3,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
+import android.widget.Toast;
+import com.BlueBlusPack.crist.bluebus.Datos.GestorDatos;
 
 
 public class AdministracionDeBLE {
     private BluetoothLeScanner mBluetoothAdapter;
-    private BluePrincipal retorno;
+    private BluePrincipal activity;
     private String patronABuscar;
 
     public AdministracionDeBLE() {
@@ -21,8 +23,9 @@ public class AdministracionDeBLE {
    public void find(BluePrincipal atc , String colectivo){
         patronABuscar = colectivo;
         scanLeDevice(true);
-        retorno =atc;
+        activity =atc;
     }
+
     public void stop(){
         scanLeDevice(false);
     }
@@ -37,35 +40,48 @@ public class AdministracionDeBLE {
     }
 
 
-
-    // Device scan callback.
-/*    private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
+    private ScanCallback mScanCallback = new ScanCallback() {
         @Override
-        public void onScanResult(final BluetoothDevice device, int rssi, byte[] scanRecord) {
-            if(device != null && device.getName() != null){
-                if (device.getName().equals(patronABuscar)) {
-                    scanLeDevice(false);
-                    retorno.runOnUiThread(new Runnable() {
+        public void onScanResult(int callbackType, ScanResult result) {
+            super.onScanResult(callbackType, result);
+            String deviceName;
+            if(result.getDevice().getName()!=null) {
+                deviceName = result.getDevice().getName();
+            }else {
+                deviceName = getUnidad(result.getScanRecord().getBytes());
+            }
+            if (deviceName != null && deviceName.equals(patronABuscar)){
+                String mac = result.getDevice().getAddress();
+                GestorDatos gestorDatos = new GestorDatos(activity.getApplicationContext());
+                if(gestorDatos.verificarUnidad(mac)){
+                        activity.runOnUiThread(new Runnable() {
                         public void run() {
-                            retorno.detener();
-                            Toast.makeText(retorno.getApplicationContext(), "Colectivo acercándose", Toast.LENGTH_SHORT).show();
+                            activity.detener();
+                            Toast.makeText(activity.getApplicationContext(), "Colectivo acercándose", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             }
         }
-    };*/
-
-    private ScanCallback mScanCallback = new ScanCallback() {
-        @Override
-        public void onScanResult(int callbackType, ScanResult result) {
-            super.onScanResult(callbackType, result);
-            if(result.getDevice()!=null && result.getDevice().getName()!= null) {
-                if (result.getDevice().getName().equals(patronABuscar)){
-                    String mac = result.getDevice().getAddress();
-
-                }
-            }
-        }
     };
+
+
+    private String getUnidad(byte [] mScanRecord){
+        StringBuilder unidad = new StringBuilder();
+        unidad.append(getMajor(mScanRecord));
+        unidad.append("-");
+        unidad.append(getMinor(mScanRecord));
+        return unidad.toString();
+    }
+
+    private String getMajor(byte [] mScanRecord) {
+        String major = String.valueOf( (mScanRecord[25] & 0xff) * 0x100 + (mScanRecord[26] & 0xff));
+        return major;
+    }
+    private String getMinor(byte [] mScanRecord) {
+        String minor = String.valueOf( (mScanRecord[27] & 0xff) * 0x100 + (mScanRecord[28] & 0xff));
+        return minor;
+    }
+
+
 }
