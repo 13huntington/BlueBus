@@ -82,17 +82,16 @@ public class GestorDatos {
         return unidades;
     }
 
-    public boolean obtenerUnidad(int mac){
+    public boolean verificarUnidad(String macBuscado){
         ArrayList<Unidad> unidades = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query(
-                Tablas.Unidad.NOMBRETABLA,
-                new String[]{Tablas.Unidad.MAC, Tablas.Unidad.LINEA},
-                Tablas.Unidad.MAC +"="+mac,
-                null,null,null,null);
-        if(cursor != null)
+        String consulta = "SELECT mac FROM Unidad WHERE mac LIKE ?";
+        Cursor cursor = db.rawQuery(consulta, new String[]{macBuscado});
+        if(cursor.moveToFirst())
         {
+            String i = cursor.getString(0);
             return true;
+
         }
         return false;
     }

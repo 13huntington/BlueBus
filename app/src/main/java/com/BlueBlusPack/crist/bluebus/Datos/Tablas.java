@@ -21,7 +21,7 @@ public final class Tablas {
 
     public static class Unidad implements BaseColumns{
         public static String NOMBRETABLA = "Unidad";
-        public static String MAC = "Corredor";
+        public static String MAC = "mac";
         public static String LINEA = "nroLinea";
     }
 }
